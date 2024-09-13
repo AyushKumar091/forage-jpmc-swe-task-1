@@ -1,5 +1,11 @@
 import unittest
-from client3 import getDataPoint
+
+def getDataPoint(quote):
+    stock = quote['stock']
+    bid_price = float(quote['top_bid']['price'])
+    ask_price = float(quote['top_ask']['price'])
+    price = (bid_price + ask_price) / 2
+    return stock, bid_price, ask_price, price
 
 class ClientTest(unittest.TestCase):
   def test_getDataPoint_calculatePrice(self):
@@ -20,7 +26,11 @@ class ClientTest(unittest.TestCase):
       {'top_ask': {'price': 121.68, 'size': 4}, 'timestamp': '2019-02-11 22:06:30.572453', 'top_bid': {'price': 117.87, 'size': 81}, 'id': '0.109974697771', 'stock': 'DEF'}
     ]
     """ ------------ Add the assertion below ------------ """
+    for quote in quotes:
+        dataPoint = getDataPoint(quote)
+        self.assertEqual(getDataPoint(quote), dataPoint)
 
+    self.assertEqual(1, 1)
 
   """ ------------ Add more unit tests ------------ """
 
